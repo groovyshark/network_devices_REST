@@ -7,10 +7,10 @@ import (
 )
 
 type Device struct {
-	ID 			 int 	`json:"ID"`
-	Name 		 string `json:"Name"`
-	HardwareAddr string `json:"HardwareAddr"`
-	NetworkAddr  string `json:"NetworkAddr"`
+	ID 			 int 	  `json:"ID"`
+	Name 		 string   `json:"Name"`
+	HardwareAddr string   `json:"HardwareAddr"`
+	NetworkAddr  []string `json:"NetworkAddr"`
 }
 
 type Devices []Device
@@ -25,7 +25,6 @@ func findDevice(id int) Device {
 	// Return empty Device if not found
 	return Device{}
 }
-
 
 func localDevices() Devices {
 	interfaces, err := net.Interfaces()
@@ -45,21 +44,16 @@ func localDevices() Devices {
 		}
 
 		name := i.Name
+		hardAddr := i.HardwareAddr.String()
 
-		var hardAddr string
-		if hardAddr = i.HardwareAddr.String(); hardAddr == "" {
-			hardAddr = "none"
-		}
-
-		var strAddrs string
+		var networkAddrs []string
 		for _, a := range addrs {
-			strAddrs += fmt.Sprintf("%v:%v ", a.Network(), a.String())
+
+			strAddr := fmt.Sprintf("%v: %v", a.Network(), a.String())
+			networkAddrs = append(networkAddrs, strAddr)
 		}
 
-		devices = append(devices, Device{ ID: id,
-										  Name: name,
-										  HardwareAddr: hardAddr,
-										  NetworkAddr: strAddrs })
+		devices = append(devices, Device{ ID: id, Name: name, HardwareAddr: hardAddr, NetworkAddr: networkAddrs })
 		id += 1
 	}
 	return devices

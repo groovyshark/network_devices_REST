@@ -13,7 +13,10 @@ func getAllDevices(w http.ResponseWriter, r *http.Request)  {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
-	if err := json.NewEncoder(w).Encode(devices); err != nil {
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("","\t")
+
+	if err := encoder.Encode(devices); err != nil {
 		panic(err)
 	}
 }
@@ -33,7 +36,10 @@ func getSingleDevice(w http.ResponseWriter, r *http.Request)  {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
 
-		if err := json.NewEncoder(w).Encode(device); err != nil {
+		encoder := json.NewEncoder(w)
+		encoder.SetIndent("","\t")
+
+		if err := encoder.Encode(device); err != nil {
 			panic(err)
 		}
 		return
@@ -43,7 +49,10 @@ func getSingleDevice(w http.ResponseWriter, r *http.Request)  {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusNotFound)
 
-	if err := json.NewEncoder(w).Encode(jsonErr{Code: http.StatusNotFound, Text: "Not Found"}); err != nil {
+	encoder := json.NewEncoder(w)
+	encoder.SetIndent("","\t")
+
+	if err := encoder.Encode(jsonError{Code: http.StatusNotFound, Text: "Not Found"}); err != nil {
 		panic(err)
 	}
 }

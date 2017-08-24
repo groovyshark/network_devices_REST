@@ -21,13 +21,13 @@ var routes = Routes{
 		indexPage,
 	},
 	Route{
-		"TodoIndex",
+		"getAllDevices",
 		"GET",
 		"/devices",
 		getAllDevices,
 	},
 	Route{
-		"TodoShow",
+		"getSingleDevice",
 		"GET",
 		"/devices/{deviceId}",
 		getSingleDevice,

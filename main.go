@@ -5,12 +5,14 @@ import (
 	"net/http"
 )
 
+const port  = ":8081"
+
 var devices Devices
 
 func handleRequests() {
 	router := NewRouter()
 
-	log.Fatal(http.ListenAndServe(":8081", router))
+	log.Fatal(http.ListenAndServe(port, router))
 }
 
 func main() {
