@@ -1,9 +1,14 @@
 FROM golang
 
-ADD . /home/rzhevskiy/GoWorkspace/src/networkDevices_REST
-
-RUN go install networkDevices_REST
-
-ENTRYPOINT /go/bin/network_devices_REST
+WORKDIR /app
 
 EXPOSE 8080
+
+ENV SRC_DIR=/go/src/github.com/groovyshark/network_devices_REST
+
+ADD . $SRC_DIR
+
+RUN go get github.com/gorilla/mux
+RUN cd $SRC_DIR; go build -o network_rest; cp network_rest /app/
+
+ENTRYPOINT ["./network_rest"]
