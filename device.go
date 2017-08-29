@@ -16,7 +16,7 @@ type Device struct {
 type Devices []Device
 
 
-func findDevice(id int) Device {
+func findDevice(id int, devices Devices) Device {
 	for _, device := range devices {
 		if device.ID == id {
 			return device

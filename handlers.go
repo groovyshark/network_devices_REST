@@ -30,7 +30,7 @@ func getSingleDevice(w http.ResponseWriter, r *http.Request)  {
 		panic(err)
 	}
 
-	device := findDevice(deviceId)
+	device := findDevice(deviceId, devices)
 	if device.ID > 0 {
 
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")

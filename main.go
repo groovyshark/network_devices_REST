@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-const port  = ":8081"
+const port  = ":8080"
 
 var devices Devices
 
