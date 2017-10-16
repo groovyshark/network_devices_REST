@@ -27,7 +27,7 @@ func getSingleDevice(w http.ResponseWriter, r *http.Request)  {
 	var deviceId int
 	var err error
 	if deviceId, err = strconv.Atoi(vars["deviceId"]); err != nil {
-		panic(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
 	device := findDevice(deviceId, devices)
@@ -40,7 +40,7 @@ func getSingleDevice(w http.ResponseWriter, r *http.Request)  {
 		encoder.SetIndent("","\t")
 
 		if err := encoder.Encode(device); err != nil {
-			panic(err)
+			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
 		return
 	}
@@ -53,7 +53,7 @@ func getSingleDevice(w http.ResponseWriter, r *http.Request)  {
 	encoder.SetIndent("","\t")
 
 	if err := encoder.Encode(jsonError{Code: http.StatusNotFound, Text: "Not Found"}); err != nil {
-		panic(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 }
 
